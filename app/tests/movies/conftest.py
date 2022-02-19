@@ -1,6 +1,6 @@
 import pytest
 
-from movies.models import Movie
+from app.movies.models import Movie
 
 
 @pytest.fixture(scope='function')
