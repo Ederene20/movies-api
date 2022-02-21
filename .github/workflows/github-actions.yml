@@ -14,4 +14,4 @@ jobs:
       - name: Build containers
         run: sudo docker-compose -f docker-compose.yml up -d --build
       - name: Running tests
-        run: sudo docker-compose -f docker-compose.yml exec movies pytest
+        run: docker-compose -f docker-compose.yml exec movies pytest
