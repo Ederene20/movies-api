@@ -1,0 +1,17 @@
+name: Deployment
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build containers
+        run: docker-compose -f docker-compose.yml up -d --build
+      - name: Running tests
+        run: docker-compose -f docker-compose.yml exec movies pytest
