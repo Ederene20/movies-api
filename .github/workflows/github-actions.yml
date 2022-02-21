@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build containers
-        run: docker-compose -f docker-compose.yml up -d --build
+        run: sudo docker-compose -f docker-compose.yml up -d --build
       - name: Running tests
-        run: docker-compose -f docker-compose.yml exec movies pytest
+        run: sudo docker-compose -f docker-compose.yml exec movies pytest
