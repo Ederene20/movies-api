@@ -16,3 +16,11 @@ def test_ping(client):
 
     assert response.status_code == 200
     assert content["ping"] == "pong!"
+
+
+def test_hello(client):
+    url = reverse("hello")
+    response = client.get(url)
+    content = json.loads(response.content)
+    assert response.status_code == 200
+    assert content["greetings"] == "hello!"

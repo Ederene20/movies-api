@@ -12,3 +12,4 @@ def hello(request):
     data = {
         'greetings': 'hello!'
     }
+    return JsonResponse(data)
