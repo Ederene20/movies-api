@@ -30,7 +30,7 @@ jobs:
       - name: Build the image
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: docker build -f Dockerfile registry.heroku.com/movies-api-docker/web .
+        run: docker build -f Dockerfile -t registry.heroku.com/movies-api-docker/web .
 
       - name: Push the image to the registry
         env:
