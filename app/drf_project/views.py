@@ -6,3 +6,9 @@ def ping(request):
         "ping": "pong!"
     }
     return JsonResponse(data)
+
+
+def hello(request):
+    data = {
+        'greetings': 'hello!'
+    }
