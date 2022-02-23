@@ -21,7 +21,23 @@ jobs:
     needs: [test]
     steps:
       - uses: actions/checkout@v2
+
       - name: Login to Heroku Container registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:login
+
+      - name: Build the image
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: docker build -f Dockerfile registry.heroku.com/movies-api-docker/web .
+
+      - name: Push the image to the registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: docker push registry.heroku.com/movies-api-docker/web:latest
+
+      - name: Release the image
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release web --app movies-api-docker
