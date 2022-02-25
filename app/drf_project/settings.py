@@ -29,12 +29,15 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
 # Disable browsable API in production
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
+
 if not DEBUG:
-    REST_FRAMEWORK = {
-        "DEFAULT_RENDERER_CLASSES": (
-            "rest_framework.renderers.JSONRenderer",
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
+            'rest_framework.renderers.JSONRenderer',
         )
-    }
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'movies'
 ]
 
@@ -148,3 +152,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'movies.CustomUser'
 
 CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com']
+
+# SWAGGER
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False
+}
