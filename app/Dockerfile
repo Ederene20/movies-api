@@ -7,29 +7,23 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV DEBUG 0
-ENV SECRET_KEY u=ij#eosmzfp2m48)(vv^%tovv)^xx(lh4l6d!rw&66r3%m^le
-ENV DJANGO_ALLOWED_HOSTS .herokuapp.com
 
 # install system dependencies
 RUN apt-get update \
-  && apt-get -y install gcc postgresql \
-  && apt-get clean
+    && apt-get -y install netcat gcc postgresql \
+    && apt-get clean
 
-# add and install requirements
+# install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
+# copy entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 # add app
 COPY . .
 
-# collect static files
-RUN python manage.py collectstatic --noinput
-
-# add and run as non-root user
-RUN adduser --disabled-password myuser
-USER myuser
-
-# run gunicorn
-CMD gunicorn drf_project.wsgi:application --bind 0.0.0.0:$PORT
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
